@@ -1,0 +1,283 @@
+ delete from `fst_main_data_report` ;
+ INSERT INTO  `fst_main_data_report`
+ (
+SELECT
+	concat( `s`.`first_name`, ' ', `s`.`last_name` ) AS `student_name`,
+	`d`.`city` AS `city`,
+	`st`.`short_name` AS `state`,
+	`d`.`age` AS `age`,
+	`d`.`gender` AS `sex`,
+	`r`.`short_name` AS `race`,
+	`d`.`veteran` AS `veteran_status`,
+	`edu`.`short_name` AS `highest_level_of_education`,
+	`emp`.`short_name` AS `employment_status_prior_to_apprenticeship`,
+	`d`.`disability` AS `disability`,(
+	CASE
+			
+			WHEN ((
+					`s`.`status` = 'active' 
+					) 
+				AND ( `s`.`first_emergency_contact_no` = 1 )) THEN
+				'active' 
+				WHEN ((
+						`s`.`status` = 'active' 
+						) 
+					AND isnull( `s`.`first_emergency_contact_no` )) THEN
+					'PII Pending' ELSE `s`.`status` 
+				END 
+				) AS `status`,
+				`ap`.`occurrence_course_code` AS `program`,
+				`pt`.`time_elapse` AS `time_elapsed`,
+				cast(
+				`pt`.`time_elapse_filter` AS DECIMAL ( 5, 2 )) AS `time_elapse_filter`,
+				`pt`.`evidence_progress` AS `evidence_progress`,
+				`pt`.`evidence_progress_filter` AS `evidence_progress_filter`,
+				`pt`.`target` AS `target`,
+				concat( `staff`.`first_name`, ' ', `staff`.`last_name` ) AS `success_coach`,
+				date_format( str_to_date( `dd`.`start_date`, '%d/%m/%Y' ), '%m/%d/%Y' ) AS `program_start_date`,
+				`dd`.`start_date_long` AS `program_start_date_filter`,
+				date_format( str_to_date( `dd`.`expected_end_date`, '%d/%m/%Y' ), '%m/%d/%Y' ) AS `expected_end_date`,
+				`dd`.`expected_end_datelong` AS `expected_end_date_filter`,
+				date_format( str_to_date( `dd`.`actual_end_date`, '%d/%m/%Y' ), '%m/%d/%Y' ) AS `actual_end_date`,
+				`dd`.`actual_end_date_long` AS `actual_end_date_filter`,
+				`em`.`short_name` AS `employer`,
+				concat(
+					`supervisor`.`first_name`,
+					' ',
+				ifnull( `supervisor`.`last_name`, '' )) AS `supervisor`,
+				concat(
+					`mentor`.`first_name`,
+					' ',
+				ifnull( `mentor`.`last_name`, '' )) AS `mentor`,
+				cast( `sal`.`initial_salary` AS CHAR charset utf8mb4 ) AS `initial_salary_$per_hour`,
+				`ojt`.`required_rti` AS `required_rti`,
+				 `ojt`.`completed_rti`  AS `completed_rti`,
+			`ojt`.`remaining_rti`   AS `remaining_rti`,
+				`ojt`.`required_ojt` AS `required_ojt`,
+				 `ojt`.`completed_ojt` AS `completed_ojt`,
+				 `ojt`.`remaining_ojt`   AS `remaining_ojt`,
+				date_format( from_unixtime(( `d`.`dob` / 1000 )), '%m/%d/%Y' ) AS `date_of_birth`,
+				`s`.`email_id` AS `email_id`,
+				`s`.`student_id` AS `student_id`,(
+				CASE
+						
+						WHEN ( `ld`.`leave_date`  is not null ) THEN
+						date_format( from_unixtime(( `ld`.`leave_date` / 1000 )), '%m/%d/%Y' ) ELSE '' 
+					END 
+						) AS `leave_date`,(
+					CASE
+							
+							WHEN ( `ld`.`leave_date`  is not null ) THEN
+							`ld`.`leave_date` ELSE '' 
+						END 
+							) AS `leave_date_filter`,(
+						CASE
+								
+								WHEN ( `ld`.`leave_date` is not null) THEN
+								`lr`.`short_name` ELSE '' 
+							END 
+								) AS `leave_reason`,(
+							CASE
+									
+									WHEN ((
+											`s`.`status` = 'active' 
+											) 
+										AND ( `s`.`first_emergency_contact_no` = 1 )) THEN
+										'active' 
+										WHEN ((
+												`s`.`status` = 'active' 
+												) 
+											AND isnull( `s`.`first_emergency_contact_no` )) THEN
+											'PII Pending' ELSE `s`.`status` 
+										END 
+											) AS `account_status`,(
+										CASE
+												
+												WHEN ( `ld`.`is_alumni` = 1 ) THEN
+												'Yes' ELSE 'No' 
+											END 
+											) AS `alumni`,
+											`adu`.`street` AS `street`,
+											substr( cast( `adu`.`zipcode` AS CHAR charset utf8mb4 ), 1, 255 ) AS `zipcode`,
+											`adu`.`leaving_hourly_rate` AS `leaving_hourly_rate`,
+											date_format( from_unixtime(( `s`.`created_at` / 1000 )), '%m/%d/%Y' ) AS `created_date`,
+											date_format( from_unixtime(( `doc`.`updated_at` / 1000 )), '%m/%d/%Y' ) AS `documents_approved_date`,
+											date_format( from_unixtime(( `s`.`created_at` / 1000 )), '%m/%d/%Y' ) AS `registration_date`,
+											substr( cast( `adu`.`social_security_number` AS CHAR charset utf8mb4 ), 1, 255 ) AS `social_security_number`,
+											group_concat( DISTINCT `mlk`.`short_name` SEPARATOR ',' ) AS `employment_details`,
+											`adu`.`received_assistance` AS `received_assistance`,
+											`pt`.`evidence_progress` AS `percentage_complete`,
+											`doc`.`file_name` AS `file_name`,
+											`doc`.`status` AS `document_status`,
+											date_format( from_unixtime(( `doc`.`created_at` / 1000 )), '%m/%d/%Y' ) AS `activated_date`,
+											`doc`.`file_name` AS `PII_document`,(
+											CASE
+													
+													WHEN ((
+															`doc`.`status` = 'approved' 
+															) 
+														AND ( `doc`.`updated_at` IS NOT NULL )) THEN
+														date_format( from_unixtime(( `doc`.`updated_at` / 1000 )), '%m/%d/%Y' ) 
+														WHEN ((
+																`doc`.`status` = 'approved' 
+																) 
+															AND isnull( `doc`.`updated_at` )) THEN
+															date_format( from_unixtime(( `doc`.`created_at` / 1000 )), '%m/%d/%Y' ) ELSE '' 
+														END 
+														) AS `document_approved_date`,
+														date_format( from_unixtime(( `doc`.`created_at` / 1000 )), '%m/%d/%Y' ) AS `document_created_date`,(
+														CASE
+																
+																WHEN ((
+																		`s`.`phone` IS NOT NULL 
+																		) 
+																	AND ( `s`.`phone` <> '' )) THEN
+																	`s`.`phone` ELSE `s`.`mobile` 
+																END 
+																) AS `phone`,
+																`mc`.`short_name` AS `campus`,
+																`ma`.`short_name` AS `area`,
+																`ethnic`.`short_name` AS `ethnic_group`,
+																`adu`.`no_family_members` AS `no_family_members`,
+																`adu`.`no_children` AS `no_children`,
+																`adu`.`household_income` AS `household_income`,(
+																CASE
+																		
+																		WHEN ( `adu`.`ex_offender` = 1 ) THEN
+																		'Yes' 
+																		WHEN ( `adu`.`ex_offender` = 0 ) THEN
+																		'No' 
+																	END 
+																		) AS `ex_offender`,(
+																	CASE
+																			
+																			WHEN ( `adu`.`conviction_assistance` = 1 ) THEN
+																			'Yes' 
+																			WHEN ( `adu`.`conviction_assistance` = 0 ) THEN
+																			'No' 
+																		END 
+																			) AS `overcoming_barriers`,(
+																		CASE
+																				
+																				WHEN ( `adu`.`dominant_language` = 1 ) THEN
+																				'Yes' 
+																				WHEN ( `adu`.`dominant_language` = 0 ) THEN
+																				'No' 
+																			END 
+																				) AS `english_proficiency`,(
+																			CASE
+																					
+																					WHEN ( `d`.`use_my_information` = 1 ) THEN
+																					'Yes' 
+																					WHEN ( `d`.`use_my_information` = 0 ) THEN
+																					'No' 
+																				END 
+																					) AS `use_my_information`,(
+																				CASE
+																						
+																						WHEN ( `d`.`declaration` = 1 ) THEN
+																						'Yes' 
+																						WHEN ( `d`.`declaration` = 0 ) THEN
+																						'No' 
+																					END 
+																						) AS `declaration`,-- (
+																				-- 	CASE		WHEN (( unix_timestamp() * 1000 ) > `dd`.`expected_end_datelong` ) THEN 'Completed' ELSE 'Live' 	END ) AS `program_status` 
+																						case when ISNULL(pStatus.short_name) then 'Not Started' else pStatus.short_name end  as program_status,
+																						 `s`.`user_id`  as u_id
+																					FROM
+																						(((((((((((((((((((((((((
+																																															`pf-proretention-3`.`students` `s`
+																																															LEFT JOIN `pf-proretention-3`.`student_add_detail_update` `d` ON ((
+																																																	`d`.`user_id` = `s`.`user_id` 
+																																																)))
+																																														LEFT JOIN `pf-proretention-3`.`student_additional_detail` `coach` ON (((
+																																																	`coach`.`user_id` = `s`.`user_id` 
+																																																	) 
+																																															AND ( `coach`.`source` = 'coach' ))))
+																																													LEFT JOIN `pf-proretention-3`.`student_additional_detail` `mentors` ON (((
+																																																`mentors`.`user_id` = `s`.`user_id` 
+																																																) 
+																																														AND ( `mentors`.`source` = 'employer' ))))
+																																												LEFT JOIN `pf-proretention-3`.`staffs` `staff` ON ((
+																																														`staff`.`id` = `coach`.`source_id` 
+																																													)))
+																																											LEFT JOIN `pf-proretention-3`.`vw_program_date_details` `dd` ON ((
+																																													`dd`.`user_id` = `s`.`user_id` 
+																																												)))
+																																										JOIN `pf-proretention-3`.`academic_program` `ap` ON ((
+																																												`ap`.`id` = `dd`.`program_id` 
+																																											)))
+																																									LEFT JOIN `pf-proretention-3`.`masterlookup` `st` ON ((
+																																											`st`.`id` = `d`.`state` 
+																																										)))
+																																								LEFT JOIN `pf-proretention-3`.`masterlookup` `r` ON ((
+																																										`r`.`id` = `d`.`race` 
+																																									)))
+																																							LEFT JOIN `pf-proretention-3`.`masterlookup` `edu` ON (((
+																																										`edu`.`id` = `d`.`education` 
+																																										) 
+																																								AND ( `edu`.`lookup_name` = 'higherEducation' ))))
+																																						LEFT JOIN `pf-proretention-3`.`masterlookup` `emp` ON (((
+																																									`emp`.`id` = `d`.`employment_status` 
+																																									) 
+																																							AND ( `emp`.`lookup_name` = 'employmentStatus' ))))
+																																					LEFT JOIN `pf-proretention-3`.`vw_progress_tracker` `pt` ON (((
+																																								`pt`.`user_id` = `s`.`user_id` 
+																																								) 
+																																						AND ( `pt`.`program_id` = `ap`.`id` ))))
+																																				LEFT JOIN `pf-proretention-3`.`masterlookup` `em` ON (((
+																																							`em`.`id` = `mentors`.`source_id` 
+																																							) 
+																																					AND ( `em`.`lookup_name` = 'employer' ))))
+																																			LEFT JOIN `pf-proretention-3`.`emp_supervisor_mentor` `mentor` ON (((
+																																						`mentor`.`type` = 'mentor' 
+																																						) 
+																																					AND ( `mentor`.`user_id` = `s`.`user_id` ) 
+																																				AND ( `mentor`.`emp_id` = `mentors`.`source_id` ))))
+																																		LEFT JOIN `pf-proretention-3`.`emp_supervisor_mentor` `supervisor` ON (((
+																																					`supervisor`.`type` = 'supervisor' 
+																																					) 
+																																				AND ( `supervisor`.`user_id` = `s`.`user_id` ) 
+																																			AND ( `supervisor`.`emp_id` = `mentors`.`source_id` ))))
+																																	LEFT JOIN `pf-proretention-3`.`vw_rti_ojt_tracker_details` `ojt` ON (((
+																																				`ojt`.`email_id` = `s`.`email_id` 
+																																				) 
+																																		AND ( `ojt`.`program` = `ap`.`occurrence_course_code` ))))
+																																LEFT JOIN `pf-proretention-3`.`grading_intial_salary_info` `sal` ON ((
+																																		`sal`.`user_id` = `s`.`user_id` 
+																																	)))
+																															LEFT JOIN `pf-proretention-3`.`grading_user_program_status` `ld` ON ((
+																																	`ld`.`user_id` = `s`.`user_id`  and ld.program_id=`ap`.`id` and ld.status=1
+																																)))
+																															LEFT JOIN masterlookup pStatus ON pStatus.id=ld.prog_status AND pStatus.lookup_name = 'programStatus'
+																														LEFT JOIN `pf-proretention-3`.`masterlookup` `lr` ON (((
+																																	`lr`.`id` = `ld`.`leave_reason` 
+																																	) 
+																															AND ( `lr`.`lookup_name` = 'armreason' ))))
+																													LEFT JOIN `pf-proretention-3`.`student_add_document` `doc` ON ((
+																															`doc`.`user_id` = `s`.`user_id` 
+																														)))
+																												LEFT JOIN `pf-proretention-3`.`grading_program_date_details` `pd` ON ((
+																														`pd`.`user_id` = `s`.`user_id` 
+																													)))
+																											LEFT JOIN `pf-proretention-3`.`student_add_detail_update` `adu` ON ((
+																													`adu`.`user_id` = `s`.`user_id` 
+																												)))
+																										LEFT JOIN `pf-proretention-3`.`masterlookup` `ethnic` ON ((
+																												`ethnic`.`id` = `adu`.`ethnic_group` 
+																											)))
+																									LEFT JOIN `pf-proretention-3`.`masterlookup` `mc` ON (((
+																												`s`.`campus` = `mc`.`id` 
+																												) 
+																										AND ( `mc`.`lookup_name` = 'campus' ))))
+																								LEFT JOIN `pf-proretention-3`.`masterlookup` `ma` ON (((
+																											`ap`.`area_id` = `ma`.`id` 
+																											) 
+																									AND ( `ma`.`lookup_name` = 'area' ))))
+																							LEFT JOIN `pf-proretention-3`.`masterlookup` `mlk` ON ((
+																									`mlk`.`id` = `adu`.`employment_details` 
+																								))) 
+																					GROUP BY
+																					`s`.`user_id`,
+	`dd`.`program_id`
+	 )

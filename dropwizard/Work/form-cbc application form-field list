@@ -1,0 +1,136 @@
+kinName 
+contact name // nextOfKinForename
+kinAddress 
+kinAddress2 Contact Address 1 // onBehalfKinAddress
+==========================================================================================================================
+		Course and personal information:
+
+course information:
+Course Name// courseName //$$academicProgramId$$
+
+Personal Information:
+Title //title //$$title$$
+Forename //forename //$$firstName$$
+Surname //surname//$$lastName$$
+Gender//gender//$$gender$$
+National Insurance Number //NI//$$nationalInsuranceNumber$$
+Have you enrolled at CBC Previously? //enrolled //$$isOldStudent$$
+Student ID //studentId////$$studentId$$
+Date Of Birth//dob//$$dateOfBirth$$
+
+Address and Contact Information:
+Address line 1 ////address1 ////$$address1$$
+Address line 2 ////address2 ////$$address2$$
+Town//town//$$city$$
+County//county//$$others$$
+Postcode //postCode ////$$nextOfKinPostalCode$$
+Main Phone Number//mainPhoneNumber//$$mainPhone$$,$$termMobileNo$$
+Second Phone Number //secondPhoneNumber//$$termTelephone$$
+Email Address//email_ID//$$emailId$$
+Confirm Email Address//kinEmailId//$$nextOfKinEmailId$$
+Secondary Email Address//secondaryEmailId//$$secondaryEmailId$$
+Nationality//nationality//$$countryOfNationality$$
+
+Emergency Contact Details:
+Contact Name//kinName//$$nextOfKinForename$$
+Contact Address 1//kinAddress//$$nextOfKinAddress$$
+Contact Address 2//kinAddress12//$$nextOfKinAddress2$$
+Contact Town//kinTown1//$$nextOfKinCity$$
+Contact County//kinCounty1//$$termCountry$$
+Contact Postcode//kinPostCode//$$nextOfKinPostalCode$$
+Contact Phone Number//kinPhoneNumber//$$nextOfKinPhoneNo$$
+Contact Relationship//kinRelationship//$$nextOfKinRelationship$$
+Contact Email Address//kinEmailId//$$nextOfKinEmailId$$
+
+Emergency Contact Details 2:
+Contact Name//kinName2//$$onBehalfKinForename$$
+Contact Address 1 //kinAddress2//$$onBehalfKinAddress$$
+Contact Address 2//kinAddress22//$$termAddress$$
+Contact Town//kinTown2//$$termTown$$
+Contact County//kinCounty2//$$previousNameDetails$$
+Contact Postcode//kinPostcode2//$$termPostCode$$
+Contact Phone Number//kinPhonenumber2//$$onBehalfKinPhoneNo$$
+Contact Relationship//kinRelation2////$$onBehalfKinRelationship$$
+Contact Email//kinEmail2//$$onBehalfKinEmailId$$
+==========================================================================================================================
+		Residence Details
+
+Have you lived in the UK or EU for three years or more? //$$customField1$$
+UK Entry Date//ukEntryDate//$$customField2$$
+Are you seeking Asylum?//asylum//$$customField3$$
+Passport No.//ppNo//$$customField4$$
+The country where you currently live?//currentLiveCountry//$$countryId$$
+==========================================================================================================================
+		Additional Arrangements
+
+Did you receive Learning Support at School?//learningSupport//$$customField5$$
+Were you statemented at School?//statementAtSchool//$$customField21$$
+Did you have any special exam provision at school?//splExam//$$customField6$$
+Do you have an Education and Health Care Plan?//EHCP//$$customField7$$
+Would you like a Learning Mentor whilst on your course?//LMW//$$customField8$$
+Do you want to declare any medical condition?//declareMedical//$$customField22$$
+Please state condition details//medicalConditionDet//$$customField23$$
+Are there any special arrangements that need to be made prior to the interview?//spArrangements//$$customField9$$
+What arrangements do you need making?//SpArrangementsDet//$$customField10$$
+Do you have a disability or learning difficulty? (E.g. dyslexia, dyspraxia)//dyslexia//$$customField11$$
+Safeguarding//safeguarding//$$customField13$$
+==========================================================================================================================
+		Education and Employment Information
+
+
+Name of School or College last attended//schoolName//$$schoolId$$
+Are you employed?//isEmployee//$$customField25$$
+How many hours a week do you work?//empDet//$$customField14$$
+Tell us how long you have been unemployed?//unEmpDet//$$customField15$$
+Do you have any criminal convictions? (excluding spent convictions)//isCriminalConviction//$$isCriminalConvictions$$
+Personal Statement//personalStatement//$$personalStatement$$
+==========================================================================================================================
+		Submit Application
+
+Other Information:
+How did you hear about Central Bedfordshire College?//hearAboutCBC//$$customField16$$
+Others//hereAboutOther//$$customField17$$
+Name ofAgent//nameofagent//$$customField18$$
+Social Media//socialMedia//$$customField24$$
+Why did you choose to apply to CBC?//WhyCBC//$$customField19$$
+Others//WhyChooseOthers//$$customField20$$
+What is your ethnic group?//ethnicGroup//$$ethinicOrginId$$
+ispostbyPhone//$$isWishByPostPhone$$
+isProcess//$$isWishByPost$$
+isagreed//$$isAgree$$
+==================================
+not mapped:::
+http://localhost:8000/#/index/forms/97/665
+
+Confirm Email Address-->>					confirmEmailId
+Have you lived in the UK , EU for three years or more?-->>	years or more
+Do you have an Education and Health Care Plan?-->>		educationandhealth
+Name of School or College last attended-->>			schoolAttented
+
+
+update:::
+Main Phone Number--->>						mainPhoneNumber
+Confirm Email Address-->>					confirmEmailId
+Have you lived in the UK , EU for three years or more?-->>	years or more
+Do you have an Education and Health Care Plan?-->>		educationandhealth
+Name of School or College last attended-->>			schoolAttented
+
+
+
+yearsOrMore
+educationandhealth
+criminalconvictions
+schoolAttented
+courseName
+
+
+
+
+
+
+
+
+
+
+
+

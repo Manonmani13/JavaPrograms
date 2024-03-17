@@ -1,0 +1,19 @@
+vw_biw_retain_tickets
+vw_biw_tickets
+vw_rpt_ticket_task_count
+vw_rpt_ticket_transactions
+vw_rpt_tickets_by_status
+vw_rpt_tickets_request_by_contacttype
+vw_rpt_tickets_request_by_hour
+vw_ticket_notification
+vw_user_all_tickets
+vw_user_alumni_tickets
+
+vw_user_ccss_tickets
+vw_user_confidential_tickets
+vw_user_ticket_attachments_student
+
+
+
+email_tickets not in -- case_notes
+

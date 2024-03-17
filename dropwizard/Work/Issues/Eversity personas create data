@@ -1,0 +1,46 @@
+Eversity persona update datas:
+
+Request URL: https://e2suat-platform-service.engage2serve.com/api/v2/admin/audience/13
+PUT
+
+{"campusid":null,"audienceType":"persona","name":"Persona for NCC","description":"Persona for NCC","status":"active","count":null,"userType":"student","attributeData":[{"campusid":null,"attibuteId":2,"attibuteValue":"Nutrition and Dietetics - ND","attibuteOperator":"EQUALS","attibuteOperatorName":"Equals","attibuteName":"area","attributeColumnName":"curriculum","attibuteValueId":71127,"attributeTableName":null,"attributeType":"system"},{"campusid":null,"attibuteId":1,"attibuteValue":"Valenzuela Campus","attibuteOperator":"EQUALS","attibuteOperatorName":"Equals","attibuteName":"campus","attributeColumnName":"campus","attibuteValueId":71115,"attributeTableName":null,"attributeType":"system"}],"userIds":null,"external":0,"publicAudience":true,"teamId":null,"addUsers":"74454144,74454337,74454340,74454483,74454515,74454581,74454632,74454790,74454861,74454910,74454917,74454958,74454961,74455020,74455095"}
+---------------------------------------------------
+Eversity personas create datas:
+
+addusers and userIds are null when create but not in update
+
+Request URL: https://e2suat-platform-service.engage2serve.com/api/v2/admin/audience
+POST:
+
+{"campusid":null,"audienceType":"persona","name":"Persona for NCC","description":"Persona for NCC","status":"active","count":null,"userType":"student","attributeData":[{"campusid":null,"attibuteId":2,"attibuteValue":"Nutrition and Dietetics - ND","attibuteOperator":"EQUALS","attibuteOperatorName":"Equals","attibuteName":"area","attributeColumnName":"curriculum","attibuteValueId":71127,"attributeTableName":null,"attributeType":"system"}],"userIds":null,"external":0,"publicAudience":true,"teamId":null}
+--------------------------------------------------------------
+
+groups update payload: no add users and userids
+{
+"campusid":null,
+"audienceType":"group",
+"name":"Test Group 121",
+"description":"Test Group 121",
+"status":"active",
+"count":null,
+"userType":"student",
+"attributeData":[
+{
+"campusid":null,
+"attibuteId":2,
+"attibuteValue":"Restaurant and Fast Food Chain Operations - REFCO",
+"attibuteOperator":"EQUALS",
+"attibuteOperatorName":"Equals",
+"attibuteName":"area",
+"attributeColumnName":"curriculum",
+"attibuteValueId":71121,
+"attributeTableName":null,
+"attributeType":"system"
+}
+],
+"userIds":null,
+"external":0,
+"publicAudience":true,
+"teamId":null,
+"addUsers":""
+}

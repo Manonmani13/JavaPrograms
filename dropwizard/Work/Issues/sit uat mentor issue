@@ -1,0 +1,27 @@
+ if (!Strings.isNullOrEmpty(model.getName())){
+            String fullName = model.getName();
+            String firstName;
+            String lastName;
+            if (fullName.indexOf(" ") != -1) {
+                firstName = fullName.substring(0, fullName.indexOf(" "));
+                lastName = fullName.substring(fullName.indexOf(" ") + 1);
+            } else {
+                firstName = fullName;
+                lastName = "-";
+            }
+            model.setFirstName(firstName);
+            model.setLastName(lastName);
+            String duplicateMentee= mentorRegistrationDAO.getValue("select type from  organization_config where config='duplicateMentee'");
+            duplicateMentee ="df";
+            if (!Objects.equals(duplicateMentee, null)) {
+                String userId= mentorRegistrationDAO.getValue("select user_id from alumnis where first_name='"+firstName+"' and last_name='"+lastName+"'");
+                if (!Objects.equals(userId, null)) {
+                    model.setUserId(Long.valueOf(userId));
+                }
+                else {
+                    model.setUserId(null);
+                    System.out.println(model.getUserId());
+
+                }
+            }
+        }

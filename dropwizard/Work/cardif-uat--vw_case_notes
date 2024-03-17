@@ -1,0 +1,99 @@
+SELECT
+	`cn`.`id` AS `id`,
+	`cn`.`parent_id` AS `parent_id`,
+	`cn`.`source_id` AS `case_id`,
+	`cn`.`team_id` AS `team_id`,
+	`cn`.`staff_id` AS `staff_id`,
+	`cn`.`action_id` AS `action_id`,
+	`cn`.`body` AS `body`,
+	`cn`.`format` AS `format`,
+	`cn`.`status` AS `status`,
+	`cn`.`auto_note` AS `auto_note`,
+	`cn`.`cc` AS `cc`,
+	`cn`.`bcc` AS `bcc`,
+	`cn`.`visible_student` AS `visible_student`,
+	`cn`.`created_at` AS `created_at`,
+	`cn`.`updated_at` AS `updated_at`,
+	`cn`.`email_ticket` AS `email_ticket`,
+	`cn`.`updated_by` AS `updated_by`,
+	(
+		CASE
+		WHEN (`cn`.`created_by` = 0) THEN
+			`ct`.`user_id`
+		ELSE
+			`cn`.`created_by`
+		END
+	) AS `created_by`,
+	`cn`.`faq_id` AS `faq_id`,
+	`cn`.`source` AS `source`,
+	`cn`.`source_id` AS `source_id`,
+	`cn`.`ip_address` AS `ip_address`,
+	(
+		CASE
+		WHEN isnull(`cn`.`created_team_id`) THEN
+			NULL
+		WHEN (`cn`.`created_team_id` = 0) THEN
+			NULL
+		ELSE
+			`cn`.`created_team_id`
+		END
+	) AS `created_team_id`,
+	`cn`.`location_id` AS `location_id`,
+	`cn`.`campus_id` AS `campus_id`,
+	`cn`.`has_cc` AS `has_cc`,
+	`ta`.`name` AS `actionname`,
+	concat(`sta`.`name`) AS `createduser`,
+	concat(`sta1`.`name`) AS `updateduser`,
+	`team`.`team_name` AS `createdteam`,
+	`cn`.`is_read_by_student` AS `is_read_by_student`,
+	`cn`.`student_read_at` AS `student_read_at`,
+	`cn`.`stage_id` AS `stage_id`,
+	`csm`.`name` AS `stage_name`,
+	`cn`.`personal_email_ticket` AS `personal_email_ticket`,
+	`cn`.`note_action_category_id` AS `note_action_category_id`,
+	`ac`.`action` AS `note_action_category`
+FROM
+	(
+		(
+			(
+				(
+					(
+						(
+							(
+								`case_notes` `cn`
+								LEFT JOIN `ticket_actions` `ta` ON (
+									(`cn`.`action_id` = `ta`.`id`)
+								)
+							)
+							LEFT JOIN `community_user_profiles` `sta` ON (
+								(
+									`sta`.`user_id` = `cn`.`created_by`
+								)
+							)
+						)
+						LEFT JOIN `community_user_profiles` `sta1` ON (
+							(
+								`sta1`.`user_id` = `cn`.`updated_by`
+							)
+						)
+					)
+					LEFT JOIN `team_master` `team` ON (
+						(
+							`team`.`id` = `cn`.`created_team_id`
+						)
+					)
+				)
+				LEFT JOIN `case_stage_master` `csm` ON (
+					(`cn`.`stage_id` = `csm`.`id`)
+				)
+			)
+			LEFT JOIN `case_tickets` `ct` ON (
+				(`cn`.`source_id` = `ct`.`id`)
+			)
+		)
+		LEFT JOIN `ticket_note_action_category` `ac` ON (
+			(
+				`ac`.`id` = `cn`.`note_action_category_id`
+			)
+		)
+	)

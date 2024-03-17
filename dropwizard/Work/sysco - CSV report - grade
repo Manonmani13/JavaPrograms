@@ -1,0 +1,54 @@
+   
+------
+
+ @Path("/assessmentCriteriaAchieved/{source}/{sourceId}/{programId}/{academicYearId}")
+
+UAT:
+Request URL: https://e2suat-platform-service.engage2serve.com/api/v2/analytics/views/assessmentCriteriaAchieved/achieved/48/120/70985
+Request URL: https://e2sappeu-service.engage2serve.com/api/v2/analytics/views/assessmentCriteriaAchieved/achieved/97/371/70982
+
+LIVE report:
+Request URL: https://e2sappeu-service.engage2serve.com/api/v2/analytics/views/assessmentCriteriaAchieved/achieved/97/371/71120
+
+live :
+correct m2- api----------->Request URL: https://e2sappeu-service.engage2serve.com/api/v2/arm/gradingUnitMaster/unitDetail/383/0/904301/71120
+m2 issue--report api------>Request URL: https://e2sappeu-service.engage2serve.com/api/v2/analytics/views/assessmentCriteriaAchieved/achieved/178/383/71120
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+select * from grading_evidence;
+select * from grading_feedback_source;
+select * from grading_assessment;
+
+select * from  user_program_unit_mapping;
+select * from  student_program_unit_mapping;
+select * from  academic_program;
+select * from  grading_user_unit_status;
+select * from  course_staff_mapping;
+---------------------------------------------------------------------------------------------------------------------------------------
+select ap.id,s.user_id,cam.short_name campus, ap.occurrence_course_code as program, concat(s.first_name, ' ', s.last_name) student, s.user_id,gs.status as grade from user_program_unit_mapping um 
+                 inner join student_program_unit_mapping sm on um.program_id=sm.academic_program_id and um.mapping_id=sm.mapping_id and um.academic_year_id=sm.academic_year_id 
+                 inner join students s on s.user_id=sm.user_id inner join masterlookup cam on cam.id=s.campus 
+                 inner join academic_program ap on ap.id=sm.academic_program_id  
+                 inner join grading_user_unit_status gs on gs.user_id = sm.user_id  
+                 inner join `course_staff_mapping` `csm` ON `csm`.`academic_program_id` = `ap`.`id` and csm.manager_id = 200431
+ where sm.status=1 and um.unit_id= 48 and um.program_id=120 and um.academic_year_id = 70985
+---------------------------------------------------------------------------------------------------------------------------------------
+        int gradeCount = reportViewDAO.countGrade("select count(distinct code) from grading_assessment where unit_id="+sourceId);
+        gradeCount= gradeCount-1;
+        dynamicRow.createCell(gradeCount+rowIndex).setCellValue("Grade");
+        dynamicRow.getCell(gradeCount+rowIndex).setCellStyle(style);
+        dynamicRow.getSheet().autoSizeColumn(gradeCount+rowIndex, true);
+---------------------------------------------------------------------------------------------------------------------------------------
+                dynamicRow1.createCell(gradeCount+rowIndex).setCellValue(user.get("grade").toString());
+                dynamicRow1.getCell(gradeCount+rowIndex).setCellStyle(styleBorder);
+                dynamicRow1.getSheet().autoSizeColumn(gradeCount+rowIndex, true);
+---------------------------------------------------------------------------------------------------------------------------------------
+academic_year_id column added in -- student_program_unit_mapping,grading_user_unit_status
+-------------------------------------------------------------------------------------------------------------------------------------
+criteriaGrade =reportViewDAO.getvalue("select status from grading_user_unit_status where unit_id="+sourceId+ " and program_id="+programId+" and academic_year_id="+academicYearId);
+--------------------------------------------------------------------------------------------------------------------------------------
+                dynamicRow1.createCell(gradeCount+rowIndex).setCellValue(user.get("grade").toString());
+                dynamicRow1.getCell(gradeCount+rowIndex).setCellStyle(styleBorder);
+                dynamicRow1.getSheet().autoSizeColumn(gradeCount+rowIndex, true);
+-----------------------------------------------------------------------------------------------------------------
+107

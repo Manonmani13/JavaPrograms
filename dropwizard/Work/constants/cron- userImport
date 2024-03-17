@@ -1,0 +1,5 @@
+#IMU user process cron
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/csvtojson/alumni/57"
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/importValidation/alumni/57"
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/importValidation/processExcel/alumni/57"
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/importValidation/userInsertion/alumni/57"

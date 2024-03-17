@@ -1,0 +1,53 @@
+
+{"userPersonalInformation":{"isExistingCourse":"$$isExistingCourse$$","studentId":"$$studentId$$","feeStatus":"$$feeStatus$$","title":"$$enq_title$$","gender":"$$enq_gender$$",
+"firstName":"$$enq_firstname$$","middleName":"$$enq_surname$$","lastName":"$$enq_lastname$$","emailId":"$$enq_email$$","dateOfBirth":"$$enq_dob$$","programName":"$$programName$$",
+"countryId":"$$enq_country$$","nationality":"$$nationality$$","heardAboutOthers":"$$heardAboutOthers$$","address1":"$$enq_address1$$","address2":"$$enq_address2$$","city":"$$enq_city$$",
+"others":"$$others$$","nextOfKinCountry":"$$nextOfKinCountry$$","nextOfKinPostalCode":"$$nextOfKinPostalCode$$","mobileNo":"$$mobileNo$$","telephone":"$$telephone$$",
+"nextOfKinPhoneNo":"$$nextOfKinPhoneNo$$",
+"appDocumentDetails":[{"fileName":"$$fileName$$","uploadFormPage":"$$uploadFormPage$$","pageSection":"$$pageSection$$","fileDetails":"$$fileDetails$$","userType":"$$userType$$"}],
+"supportServiceDocument":[{"fileName":"$$fileName$$","uploadFormPage":"$$uploadFormPage$$","pageSection":"$$pageSection$$","fileDetails":"$$fileDetails$$","userType":"$$userType$$"}]}}
+-------------------------barath
+
+{"lastTwoYears":"$$lastTwoYears$$","applicationId":"$$applicationId$$",
+"appDocumentDetails":[{"fileName":"$$fileName$$","fileDetails":"$$fileDetails$$","userType":"$$userType$$","status": true}],
+"academicQualificationHistory":[{"dateOfJoining":"$$dateOfJoining$$","dateOfLeaving":"$$dateOfLeaving$$","careLeaver":"$$careLeaver$$","countryId":"$$countryId$$",
+"examConcessionsDetails":"$$examConcessionsDetails$$","collegeSupport":"$$collegeSupport$$","learningSupportDetails":"$$learningSupportDetails$$","socialServiceDetails":"$$socialServiceDetails$$"}],
+"workHistory":[{"qualification":"$$qualification$$","institute":"$$institute$$","qualificationType":"$$qualificationType$$","qualFromDate":"$$qualFromDate$$","qualToDate":"$$qualToDate$$",
+"countryOfQual":"$$countryOfQual$$"}]}
+
+"applicationId":"$$applicationId$$",
+-------------------------mano
+{
+    "lastTwoYears": "TY",
+    "applicationId": 101,
+    "appDocumentDetail": [
+        {
+            "fileName": "test file",
+            "fileDetails": "detailscheck ",
+            "userType": "Student",
+            "status": true
+        }
+    ],
+    "academicQualificationHistory": [
+        {
+            "dateOfJoining": 1656923421195,
+            "dateOfLeaving": 1656930889745,
+            "careLeaver": "Chennai city",
+            "countryId": 121,
+            "examConcessionsDetails": "C",
+            "collegeSupport": "Madras University",
+            "learningSupportDetails":"Bsc",
+            "socialServiceDetails": "cs"
+        }
+    ],
+    "workHistory": [
+        {
+            "qualification": "Engineering",
+            "institute": "ABC Product ",
+            "qualificationType": "SoftwareEngineering",
+            "qualFromDate": "1656923421195",
+            "qualToDate": "1656930889745",
+            "countryOfQual": 12
+        }
+    ]
+}

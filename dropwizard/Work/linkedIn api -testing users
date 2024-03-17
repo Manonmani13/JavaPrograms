@@ -1,0 +1,40 @@
+engageserve55@gmail.com
+welcome@123
+
+raveesh - engageserve444@gmail.com
+welcome@123
+
+anbu - engageserve22@gmail.com      
+welcome@123
+
+sathish - engageserve33@gmail.com      
+welcome@123
+
+
+arokyar18@gmail.com
+welcome@123
+
+thennarasudev21@gmail.com
+welcome@123
+
+
+vignesh.r@engage2serve.com
+Welcome@42
+
+kumaranbharath0@gmail.com
+
+
+alumni1@yopmail.com
+----------------------------------------------------------------------
+
+testing urls for generate linkedIn access code:
+----------------------------------------------------------------------
+
+https://www.linkedin.com/oauth/v2/authorization?response_type=code&
+client_id=86v633uzjlp1sq&redirect_uri=https://edgehill-uat.engage2serve.com&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social
+
+
+https://www.linkedin.com/oauth/v2/authorization?response_type=code&
+client_id=86v633uzjlp1sq&redirect_uri=http://localhost:8000/&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social
+
+

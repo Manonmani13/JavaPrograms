@@ -1,0 +1,3 @@
+htu- campus news 
+select * from ntfns_log where source_id=4359 ORDER BY id desc limit 20
+qualification testing

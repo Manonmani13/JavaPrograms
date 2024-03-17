@@ -1,0 +1,14 @@
+
+frankline live -- update -- blocked -- api
+
+Request URL: https://e2sapp-service.engage2serve.com/api/v2/admin/students/1148
+Request Method: PUT
+
+payload:
+{"data":[{"id":1148,"createdAt":1646125962325,"updatedAt":1659333219119,"createdBy":512519,"updatedBy":512519,"campusid":null,"userId":513714,"title":null,"firstName":"Test","lastName":"User","studentId":"96368","emailId":"sandeep.k@engage2serve.com","phone":null,"mobile":"","departmentId":null,"curriculum":70880,"startYear":null,"startTerm":"1646073000000","campus":"70892","firstEmergencyContactNo":null,"secondEmergencyContactNo":null,"status":"blocked","school":null,"program":10,"modeOfStudy":null,"ids":null,"profilePicId":null,"profilePicUrl":null,"studentNumber":null,"category":null,"errorMessage":null,"processStatus":null,"isMailRequired":null,"canEnableEmail":null,"canEnableSMS":null,"canEnableCall":null,"attendance":null,"maths":null,"english":null,"mathsRegNo":null,"englishRegNo":null,"honour":false,"placement":false,"qrCode":null,"tagIds":null,"transcriptAllow":false,"name":null,"studentDetails":"Test Usersandeep.k@engage2serve.com96368","adUsername":null,"userName":null,"employerId":null,"coachId":null,"deactivateFlag":null,"deactivateDate":null,"dob":null,"gender":null,"studentAdditionalDetails":null,"socialSecurityNumber":null,"age":null,"attributeData":[]}]}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+by sundeep:
+{"id":1302,"createdAt":1649414703776,"updatedAt":1652956667291,"createdBy":0,"updatedBy":512519,"campusid":null,"userId":513868,"title":null,"firstName":"Johnathon","lastName":"Olson","studentId":"ZR_10547_CAND","emailId":"n0atn86@gmail.com","phone":"+1 2186009580","mobile":"+1 2186009580","departmentId":null,"curriculum":71088,"startYear":null,"startTerm":1649356200000,"campus":70892,"firstEmergencyContactNo":"1","secondEmergencyContactNo":null,"status":"blocked","school":null,"program":5,"modeOfStudy":null,"ids":null,"profilePicId":0,"profilePicUrl":null,"studentNumber":null,"category":null,"errorMessage":null,"processStatus":null,"isMailRequired":null,"canEnableEmail":null,"canEnableSMS":null,"canEnableCall":null,"attendance":null,"maths":null,"english":null,"mathsRegNo":null,"englishRegNo":null,"honour":false,"placement":false,"qrCode":"https://s3.amazonaws.com/e2s-prod-platform-302/a02c55bf-406f-4894-a148-41b3ec87dd7d.qrimages.jpg","tagIds":null,"transcriptAllow":false,"name":null,"studentDetails":null,"adUsername":null,"userName":null,"employerId":71564,"coachId":54,"deactivateFlag":null,"deactivateDate":null,"dob":null,"gender":null,"studentAdditionalDetails":[{"source":"employer","sourceId":71564},{"source":"coach","sourceId":54},{"source":"ssn","sourceId":"452792215"}],"socialSecurityNumber":"452792215","age":35,"attributeData":[]}
+
+sandeep.k@engage2serve.com

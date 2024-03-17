@@ -1,0 +1,16 @@
+sysco --ILP reports issues list:
+
+ILP Starting Points----(case when isnull(`apm`.`occurrence_course_code`) then 'Upskill' else `apm`.`occurrence_course_code` end) AS `maths_programme`
+
+not showing values------ not datas in academic_program table-----`ilp`.`emp_job_application1` AS `employbility_applications_start_point`,
+								`ilp`.`emp1_core_data1` AS `employbility_performance_in_sport_start_point`,
+								`ilp`.`emp1_core_data2` AS `employbility_leadership_in_sport_start_point`,
+								`ilp`.`emp1_core_data3` AS `employbility_pathway_to_success_start_point`,
+
+ILP English Targets Report--500
+ILP Survey Monkey Report -- 504
+ILP Maths Targets Report -- 504
+ILP Honour Award Dates ---- working
+ILP Core Aim Units Report-- working
+ILP Work Placement Report-- working
+ILP Milestones Report------ working

@@ -1,0 +1,14 @@
+Eversity - uat - group update issue:
+
+1. Need to pass attribute data
+2. Need to pass removed attribute userIds in userId key
+3. Need to stop shows (removed criteria's userIds  + newly added criteria's userIds) 
+
+
+
+
+
+
+
+
+

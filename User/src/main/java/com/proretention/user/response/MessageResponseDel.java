@@ -1,0 +1,22 @@
+package com.proretention.user.response;
+
+import org.springframework.stereotype.Component;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel(description = "Details about the Medical Details Response for Delete method ")
+@Component
+public class MessageResponseDel {
+	@ApiModelProperty(notes = "status of save or update method")
+	private int status;
+	@ApiModelProperty(notes = "success or failed message")	
+	private String message;
+	@ApiModelProperty(notes = "response of the  delete method")
+	private MedicalResponses content;
+}

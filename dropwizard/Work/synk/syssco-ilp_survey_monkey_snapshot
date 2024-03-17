@@ -1,0 +1,57 @@
+drop table ilp_survey_monkey_snapshot;
+create table ilp_survey_monkey_snapshot
+(
+SELECT 
+	concat( `sac`.`first_name`, ' ', `sac`.`last_name` ) AS `learner_name`,
+	`c`.`short_name` AS `campus`,
+	`ap`.`occurrence_course_code` AS `programme`,
+	date_format( from_unixtime(( `startgia`.`target_date` / 1000 )), '%d/%m/%Y' ) AS `start_deadline`,
+	date_format( from_unixtime(( `startgia`.`achievement_date` / 1000 )), '%d/%m/%Y' ) AS `start_completed`,
+	date_format( from_unixtime(( `midgia`.`target_date` / 1000 )), '%d/%m/%Y' ) AS `midway_deadline`,
+	date_format( from_unixtime(( `midgia`.`achievement_date` / 1000 )), '%d/%m/%Y' ) AS `midway_completed`,
+	date_format( from_unixtime(( `endgia`.`target_date` / 1000 )), '%d/%m/%Y' ) AS `end_deadline`,
+	date_format( from_unixtime(( `endgia`.`achievement_date` / 1000 )), '%d/%m/%Y' ) AS `end_completed`,
+	`acYear`.`short_name` AS `academic_year`,
+	max( `gid`.`created_at` ) AS `max_id`,
+	`st`.`status` AS `status` 
+FROM
+	((((((((
+									`grading_ilp_details` `gid`
+									JOIN `students_academic_log` `sac` ON (((
+												`sac`.`user_id` = `gid`.`user_id` 
+												) 
+										AND ( `sac`.`academic_year_id` = `gid`.`academic_year_id` ))))
+								JOIN `students` `st` ON ((
+										`st`.`user_id` = `sac`.`user_id` 
+									)))
+							JOIN `academic_program` `ap` ON ((
+									`ap`.`id` = `sac`.`academic_program_id` 
+								)))
+						JOIN `masterlookup` `c` ON (((
+									`c`.`id` = `ap`.`campus_id` 
+									) 
+							AND ( `c`.`lookup_name` = 'campus' ))))
+					LEFT JOIN `grading_ilp_achievements` `startgia` ON (((
+								`startgia`.`ilp_id` = `gid`.`id` 
+								) 
+							AND ( `startgia`.`type` = 'survey' ) 
+						AND ( `startgia`.`data` = 'Start' ))))
+				LEFT JOIN `grading_ilp_achievements` `midgia` ON (((
+							`midgia`.`ilp_id` = `gid`.`id` 
+							) 
+						AND ( `midgia`.`type` = 'survey' ) 
+					AND ( `midgia`.`data` = 'Midway' ))))
+			LEFT JOIN `grading_ilp_achievements` `endgia` ON (((
+						`endgia`.`ilp_id` = `gid`.`id` 
+						) 
+					AND ( `endgia`.`type` = 'survey' ) 
+				AND ( `endgia`.`data` = 'End' ))))
+		JOIN `masterlookup` `acYear` ON (((
+					`acYear`.`id` = `gid`.`academic_year_id` 
+					) 
+			AND ( `acYear`.`lookup_name` = 'academicyear' )))) 
+GROUP BY
+	`gid`.`user_id`,
+	`ap`.`occurrence_course_code`,
+	`gid`.`academic_year_id`
+)

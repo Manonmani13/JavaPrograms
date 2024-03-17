@@ -1,0 +1,19 @@
+
+
+
+htu impot validation 
+POST
+
+
+Request URL: https://e2suat-platform-service.engage2serve.com/api/v2/alumni/bulkUserDetails
+
+1. form_attributes column_name in constructJsonObject in case format IN 2029th line.
+2. changes in form_attributes.
+3. user_attributes table is empty in htu.
+
+4. 	i]] In importValidationService at 2006th line's importValidation, attributes are:
+ 	importValidation taken from import_validation table(upload_content) and 
+	attributes taken from 1988th line from form_attributes and user_attributes tables 
+	ii]] if column name is available from form_attributes, it takes from upload_content, upload_content takes from import_validation table.
+
+5.constructJSONObject 2029 -2932th line

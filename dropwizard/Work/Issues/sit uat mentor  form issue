@@ -1,0 +1,13 @@
+mentor registratin form
+---------------------------
+1.preferredname, mobilenumber and sitmatricnumber not assigned in onload
+2.preferredname not assigned in edit
+3.preferredname not in code and db
+
+
+mentee registration form
+--------------------------
+sitmatricnumber and mobilenumber not shown in form
+but assigned in edit tab 
+
+

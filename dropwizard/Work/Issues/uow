@@ -1,0 +1,23 @@
+cardiff appointment startDate endDate mismatch: by bernath 
+Event Reminder Template
+template processor 
+
+1. Need to add after calendarLink -- for email
+2. Need to change at at 3929 line -- for icscontent
+--------------------------------------------------------------------------
+
+uow -uat appointment email - link issue: by jothi anna
+
+https://uow-uat.engage2serve.com/#/staffCalendarAppointment/+0Ia+nV0E2UslashdiUNasfO1A==/ArkVHmPMKujMMN9YpKrYiA==/Mj6egiXo3Tslash6w9ISIzFMVw==/GYTcqGAx60RQSIaeHPkIfg==/n3slashssQ++GNI1n+wuPrmzUw==/onlineViewCalendar
+
+An appointment with Data-D Test has been booked successfully. Your reference number is : CNL-1503
+
+Request URL: https://e2suat-platform-service.engage2serve.com/api/v2/calendars/2431/registerInvitee
+[{"userId":74644850,"userType":"student","inviteeStatus":"registered","formDetailsId":747,"visibleAll":true}]
+
+
+
+{"field":"status"}
+
+
+

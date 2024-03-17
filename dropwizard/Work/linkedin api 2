@@ -1,0 +1,116 @@
+ @GET
+    @Timed
+    @Path("linkedInApi")
+    @TenantResolution
+    public ApiResponse getProfileInfo(@PathParam("userId") Long userId,@PathParam("mode") String mode) throws ParseException, NoSuchAlgorithmException, KeyManagementException, MalformedURLException, SQLException {
+        JSONObject result = this.service.requestingToken(userId,mode);
+        return ApiResponse.buildWithPayload(new Payload<JSONObject>().addObject(result)).setStatus(Response.Status.OK);
+    }
+-----
+
+public JSONObject requestingToken(Long userId, String mode) throws NoSuchAlgorithmException, KeyManagementException, MalformedURLException, SQLException {
+        String code= enrolmentUnityPushLogDAO.getValue("select type from organization_config where config='linkedInCode'");
+        String redirectUrl= enrolmentUnityPushLogDAO.getValue("select type from organization_config where config='linkedInredirectUrl'");
+        String clientId= enrolmentUnityPushLogDAO.getValue("select type from organization_config where config='linkedInClientId'");
+        String clientSecret= enrolmentUnityPushLogDAO.getValue("select type from organization_config where config='linkedInClientSecret'");
+
+        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+
+            /*  public void checkClientTrusted(X509Certificate[] certs, String authType) { }
+              public void checkServerTrusted(X509Certificate[] certs, String authType) { }
+              */
+            @Override
+            public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                // TODO Auto-generated method stub
+
+            }
+        }};
+
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        // Create all-trusting host name verifier
+        HostnameVerifier allHostsValid = new HostnameVerifier() {
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+        // Install the all-trusting host verifier
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        Client client = ClientBuilder.newBuilder().sslContext(sc).newClient();
+
+        WebTarget webTargets = client.target("www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code="+code+"&redirect_uri="+redirectUrl+"&client_id="+clientId+"&client_secret="+clientSecret);
+        Invocation.Builder invocationBuilder = webTargets.request(MediaType.APPLICATION_FORM_URLENCODED);
+   /*     webTargets.queryParam("grant_type", "authorization_code");
+        webTargets.queryParam("code", token);
+        webTargets.queryParam("direct_url", redirectUrl);
+        webTargets.queryParam("client_id", clientId);
+        webTargets.queryParam("client_secret", clientSecret);*/
+        Response response = invocationBuilder.post(Entity.json(webTargets));
+        JSONObject accessToken = null;
+        if (response.getStatus() == javax.ws.rs.core.Response.Status.OK.getStatusCode()) {
+            // dbs name getting successfully
+            JSONObject data = response.readEntity(JSONObject.class);
+
+            String authtoken = data.get("accessToken") != null ? data.get("accessToken").toString() : "";
+            enrolmentUnityPushLogDAO.executeQuery("Insert into multi_factor_login(user_id, linked_in, facebook, ) values("+userId+", '"+mode+"')");
+            accessToken = profileInfo(authtoken);
+        }
+        return accessToken;
+    }
+
+    public JSONObject profileInfo(String accessToken) throws  NoSuchAlgorithmException, KeyManagementException {
+        //  accessToken = jObjSession.get("access_token").toString();
+
+        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+
+            /*  public void checkClientTrusted(X509Certificate[] certs, String authType) { }
+              public void checkServerTrusted(X509Certificate[] certs, String authType) { }
+              */
+            @Override
+            public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                // TODO Auto-generated method stub
+
+            }
+        }};
+
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        // Create all-trusting host name verifier
+        HostnameVerifier allHostsValid = new HostnameVerifier() {
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+        // Install the all-trusting host verifier
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        Client clients = ClientBuilder.newBuilder().sslContext(sc).newClient();
+        WebTarget webTargets = clients.target("https://api.linkedin.com/v2/me");
+        Invocation.Builder invocationBuilder = webTargets.request(MediaType.TEXT_PLAIN);
+        invocationBuilder.header("Authorization", "Bearer " + accessToken);
+        Response response = invocationBuilder.get();
+        JSONObject info = null;
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+            info = response.readEntity(JSONObject.class);
+        }
+        return info;
+    }

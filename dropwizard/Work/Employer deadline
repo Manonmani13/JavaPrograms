@@ -1,0 +1,48 @@
+
+
+   @POST
+    @Timed
+    @Path("employerDeadlineRemindar/{orgId}")
+    public ApiResponse employerDeadlineRemindar(@PathParam("orgId") Long orgId,  @AuthParam AuthToken authToken) throws ApiException {
+        this.service.employerDeadlineRemindar(orgId, authToken);
+        return ApiResponse.build().setStatus(Response.Status.CREATED);
+    }
+
+
+
+
+public void employerDeadlineRemindar(Long orgId,AuthToken authToken)  {
+        Schema.dbName.set(redisStore.getTenantName(orgId));
+        List<Map<String, Object>>  emailReminders = studentDAO.getEmailReminder("select DATEDIFF(CURDATE(), from_unixtime ( valid_to_date / 1000 )), from_unixtime ( valid_to_date / 1000 ) from employers where DATEDIFF(CURDATE(), from_unixtime ( valid_to_date / 1000 ))=7 and valid_to_date is not null");
+
+        for(Map emailReminder : emailReminders){
+            pushToEmailReminderQueue("apprenticeshipDocumentPendingReminder", authToken, Long.valueOf(emailReminder.get("user_id").toString()), orgId);
+            studentDAO.executeQuery("INSERT INTO  `grading_pii_pending_email_log`(`user_id`, `is_read`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES (" + emailReminder.get("user_id") + ", 0," + System.currentTimeMillis() + ", " + System.currentTimeMillis() + ", null,null)");
+        }
+    }
+
+    public void pushToEmailReminderQueue(String action,AuthToken authToken, Long sourceId, Long orgId){
+        String url = awsQueue.getQueueUrl(QueueTypes.users.getQueueType());
+        System.out.println("url "+url);
+        Notifications notifications = new Notifications();
+        notifications.setAction(action);
+        notifications.setService("users");
+        notifications.setId(sourceId);
+        notifications.setOrgId(orgId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = "";
+        try {
+            json = objectMapper.writeValueAsString(notifications);
+
+            if(!json.equalsIgnoreCase("")){
+                awsQueue.sendMessageToQueue(url,json);
+                System.out.println(" pushed to queue");
+
+            }
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        };
+    }
+}
+

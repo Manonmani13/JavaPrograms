@@ -1,0 +1,27 @@
+
+
+
+courseName---academicProgramId
+title--title
+forename--firstName
+surname--lastName
+gender--gender
+NI--nationalInsuranceNumber
+enrolled--isOldStudent
+studentId--studentId
+dob--dateOfBirth
+address1--address1
+address2--address2
+town--city
+county--others
+postCode--nextOfKinPostalCode
+mainPhoneNumber--mainPhone-----update issuue
+secondPhoneNumber--termTelephone-----[[update api--termTelephoneNo]]
+email_ID--emailid
+confirmEmailId--nextOfKinEmailId
+secondaryEmailId--secondaryEmailId
+nationality--countryOfNationality
+yearsOrMore--customField1
+educationandhealth--customField7
+criminalconvictions--isCriminalConvictions
+schoolAttented--schoolId

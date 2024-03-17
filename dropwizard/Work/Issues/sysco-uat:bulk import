@@ -1,0 +1,46 @@
+sysco-uat:bulk import -- check academic year id
+
+
+Request URL: https://e2suat-platform-service.engage2serve.com/api/v2/alumni/bulkUserDetails
+{
+"userType":"student",
+"sourcePath":"https://s3.eu-west-2.amazonaws.com/e2s-pfuat-platform-contents-53/85bec836-8ac0-45c7-9bc0-295117007205.csv",
+"importName":"8f186bd2-1019-4f79-9546-a9fbd8620f8b.csv",
+"status":"initiated",
+"notificationEmilId":200431
+}
+
+
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/csvtojson/{userType}/{organizationId}"
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/importValidation/{userType}/{organizationId}"
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/importValidation/processExcel/{userType}/{organizationId}"
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/importValidation/userInsertion/{userType}/{organizationId}"
+====================================================================================================================
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/csvtojson/{userType}/{organizationId}"
+search	        -- bulkUserUpload    -- get - initiated
+at begining 	-- bulkUserUpload    -- set -"processing-Initiated"
+at end      	-- bulkUserUpload    -- set - processing
+====================================================================================================================
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/importValidation/{userType}/{organizationId}"
+search	 	-- bulkUserUpload    -- get - processing
+at begining 	-- bulkUserUpload    -- set -"reporting-Initiated"
+at end	 	-- bulkUserUpload    -- set - reporting
+====================================================================================================================
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/importValidation/processExcel/{userType}/{organizationId}"
+search		-- bulkUserUpload    -- get - reporting
+at begining 	-- bulkUserUpload    -- set -"completed-Initiated"
+at end 		-- importValidation  -- set - success/failure
+====================================================================================================================
+curl -X POST "https://e2suat-platform-service.engage2serve.com/api/v2/userImport/importValidation/userInsertion/{userType}/{organizationId}"
+search	 	-- bulkUserUpload    -- get -"completed"
+at begining 	-- bulkUserUpload    -- set -"done-initiated"
+at end 		-- importValidation  -- set - done
+====================================================================================================================
+http://192.168.2.12/engage2serve/auth/merge_requests/414
+http://192.168.2.12/engage2serve/api/merge_requests/626
+http://192.168.2.12/engage2serve/admin/merge_requests/2190
+
+
+
+
+

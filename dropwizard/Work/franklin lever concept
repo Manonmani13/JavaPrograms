@@ -1,0 +1,17 @@
+{
+        DatabaseResult<GradingUserProgramStatus> result;
+        Long id = entity.getUserId();
+        GradingUserProgramStatus existing = super.findOne(id).getResults().get(0);
+        if (!Objects.equals(existing, null)) {
+            GradingUserProgramStatusDAOImpl.executeQuery("UPDATE grading_user_program_status SET status ='0' where user_id =" + existing.getUserId() + " and program_id =" + existing.getProgramId());
+            result = super.insert(entity, authToken);
+            Long currentProgram = GradingUserProgramStatusDAOImpl.getValue("select  count(*) from grading_user_program_status where leave_reason=" + entity.getLeaveReason() + " user_id= " + entity.getUserId() + " and status=1;");
+            Long totalProgram = GradingUserProgramStatusDAOImpl.getValue("select count(program_id) from(select distinct  program as program_id  from students " +
+                    " where user_id=" + entity.getUserId() + " union all select  distinct program_id from att_ancillary_course_mapping  where user_id=" + entity.getUserId() + ")s");
+            if (Objects.equals(currentProgram, totalProgram)) {
+                GradingUserProgramStatusDAOImpl.executeQuery("UPDATE students  SET status ='lever' where user_id =" + entity.getUserId());
+                return result;
+            }
+        }
+            return super.insert(entity, authToken);
+        }

@@ -1,0 +1,176 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
+    else
+        color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/$
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+
+####platform-dev
+export JDBC_USERNAME=e2s-pldev-us-appadmin
+export JDBC_PASSWORD=2a09CGiCPMqyy3qItCBRGgpnX.W1DxtG8KXI8RbEMGkcgnO2UzCxmfaAi
+export AWS_ACCESS_KEY_ID=AKIAIURUG6QSSZPWUYPQ
+export AWS_ACCESS_KEY_SECRET=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
+export DATASOURCE_URL=jdbc:mysql://dev-e2s-db-master.c8rtglv0a4er.us-west-2.rds.amazonaws.com:3306?characterEncoding=utf8
+export LIQUIBASE_HOME=/opt/liquibase
+export JWT_SECRET=d74a3828c2cc896f73d06f8843b7712e
+export REDIS_CLUSTER_HOST=localhost
+export WEB_DOMAIN=http://localhost:8000
+export DEFAULT_FROM_EMAIL=support@engage2serve.com
+export APNS_CONFIGURATION_FILE=dev_instance.p12
+export APNS_CONFIGURATION_PASSWORD=Quscientist!@#
+
+export READ_JDBC_USERNAME=e2s-pldev-us-appadmin
+export READ_JDBC_PASSWORD=2a09CGiCPMqyy3qItCBRGgpnX.W1DxtG8KXI8RbEMGkcgnO2UzCxmfaAi
+export READ_DATASOURCE_URL=jdbc:mysql://dev-e2s-db-master.c8rtglv0a4er.us-west-2.rds.amazonaws.com:3306?characterEncoding=utf8
+
+export NODE_PATH=$NODE_PATH:/home/vanarajm/.nvm/versions/node/v6.3.1/lib/node_modules
+export SUPPORT_EMAIL=vijayakannan.k@minglebox.com
+export GCM_KEY=AIzaSyAaTuegQEUz78ZUe63SxmHLZDQQ8tsK71U
+export GCM_FILE=vanaraj_google.json
+#export BASE_API_URL=https://e2sappeu-service.engage2serve.com/api/v1/
+#export BASE_API_URL=http://localhost/
+
+export SES_REGION=US_WEST_2
+export S3_BASE_URL=https://s3.amazonaws.com/
+export APNS_CONFIGURATION_PASSWORD=Quscientist!@#
+export APNS_CONFIGURATION_FILE=dev_instance.p12
+export AWS_SNS_TOPIC_URL=arn:aws:sns:us-east-1:955264527536:EmailStatus
+export FACEBOOK_APP_ID=1818520188397435
+export FACEBOOK_APP_SECRET=512bf1e5e28c3246d0590a9a1c54629d
+export SID=ACd1947b8759b120b48a2057c966be78f9
+export AUTH_TOKEN=b9bfffa18215d1d87ae67eaba27cf726
+export FROM_NUMBER=+7206064272
+export APP_SID=AP2bd699160752ccf03be3c3ca452683b0
+export ELASTIC_SEARCH_URL=search-dev-search-bcvu4had37c2oivtydjbllm7ay.us-east-1.es.amazonaws.com
+export ERROR_LOG_RECEIVER_MAIL=developer@engage2serve.com
+export SERVICE_REGION=us-east-1
+#export S3_REGION=us-east-1
+export S3_REGION=us-west-2
+#export SQS_REGION=us-west-2
+export SQS_REGION=us-east-1
+export SERVICE_REGION=us-east-1
+export REDIS_AUTH=null
+export REDIS_AUTH=mtvWGKYdsqwEnI5Cvd2z9w==
+export REDIS_AUTH=RedisDevAuthToken2020
+export GCM_API_KEY=AIzaSyA73Yy-eyO3D9UYIiGaWm3EJzEoC9oOiQI
+export S3_BASE_URL=https://s3-us-west-2.amazonaws.com/
+export AWS_BUCKET_PREFIX=e2s-platform-contents
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
